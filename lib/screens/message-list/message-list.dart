@@ -1,6 +1,6 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:english_words/english_words.dart';
 import 'package:startup_namer/models/message.dart';
 import 'package:startup_namer/models/saved-messages.dart';
 
@@ -11,7 +11,6 @@ class MessageList extends StatefulWidget {
 
 class _MessageListState extends State<MessageList> {
   final _suggestions = <Message>[];
-  final _saved = Set<Message>();
   final _biggerFont = TextStyle(fontSize: 18.0);
 
   @override
@@ -19,7 +18,10 @@ class _MessageListState extends State<MessageList> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Startup Name Generator'),
-        actions: [IconButton(icon: Icon(Icons.list), onPressed: _pushSaved)],
+        actions: [IconButton(
+          icon: Icon(Icons.list),
+          onPressed: () => Navigator.pushNamed(context, '/saved')
+        )],
       ),
       body: _buildSuggestions(),
     );
@@ -62,23 +64,6 @@ class _MessageListState extends State<MessageList> {
         );
 
       }
-    );
-  }
-
-  void _pushSaved() {
-    Navigator.of(context).push(
-      MaterialPageRoute<void>(builder: (BuildContext context) {
-        final tiles = _saved.map((msg) => ListTile(title: Text(msg.sender, style: _biggerFont)));
-        final dividedTiles = ListTile.divideTiles(tiles: tiles, context: context).toList();
-        final savedTilesBody = dividedTiles.length > 0
-          ? ListView(children: dividedTiles)
-          : Center(child: Text('No saved items', style: _biggerFont));
-
-        return Scaffold(
-          appBar: AppBar(title: Text('Saved Suggestions')),
-          body: savedTilesBody,
-        );
-      })
     );
   }
 }

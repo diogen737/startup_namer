@@ -7,7 +7,8 @@ class SavedMessages extends ChangeNotifier {
   final _messages = Set<Message>();
 
   UnmodifiableListView<Message> get messages => UnmodifiableListView(_messages);
-  int get length => _messages.length;
+  int get count => _messages.length;
+  bool get empty => _messages.isEmpty;
 
   bool contains(Message msg) {
     return _messages.contains(msg);
