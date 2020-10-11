@@ -1,7 +1,10 @@
 {
     "dart.flutterScreenshotPath": null,
+    "dart.lineLength": 120,
+    "dart.maxLogLineLength": 2000,
     "[dart]": {
         "editor.formatOnSave": false,
-        "editor.formatOnType": false
+        "editor.formatOnType": false,
+        "editor.rulers": [120]
     }
 }
