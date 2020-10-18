@@ -1,7 +1,20 @@
+import 'package:startup_namer/src/model/message-pojo.dart';
+
 class Message {
   String content;
   String sender;
+  String senderUid;
   DateTime sent;
+  String sentFormatted;
+  bool isMine;
 
-  Message(this.content, this.sender, this.sent);
+  Message.fromPojo(MessagePojo pojo, String selfUid) {
+    content = pojo.content;
+    sender = pojo.sender;
+    senderUid = pojo.senderUid;
+    isMine = senderUid == selfUid;
+    // TODO: add error check
+    sent = DateTime.parse(pojo.sent);
+    sentFormatted = sent.toString();
+  }
 }
