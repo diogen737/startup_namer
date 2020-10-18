@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:startup_namer/src/blocs/message-bloc.dart';
 import 'package:startup_namer/src/model/message.dart';
 import 'package:startup_namer/src/screens/components/bubble.dart';
+import 'package:startup_namer/src/screens/components/loading.dart';
 
 class MessageListScreen extends StatefulWidget {
   @override
@@ -32,7 +33,7 @@ class _MessageListState extends State<MessageListScreen> {
         child: StreamBuilder<List<Message>>(
           stream: _bloc.messageStream,
           builder: (context, snapshot) {
-            if (!snapshot.hasData) return Container(child: Text('No data'));
+            if (!snapshot.hasData) return Loading();
             return ListView.builder(
               reverse: true,
               itemCount: snapshot.data.length,
