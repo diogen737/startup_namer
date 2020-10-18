@@ -18,7 +18,9 @@ class MessageBloc {
 
   getMessages() async {
     final pojos = await _repository.fetchMessages();
-    final messages = pojos.map((pojo) => new Message.fromPojo(pojo, _selfUid)).toList();
+    final messages = pojos
+      .map((pojo) => new Message.fromPojo(pojo, _selfUid))
+      .toList();
     messageSink.add(messages);
   }
 

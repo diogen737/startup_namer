@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:startup_namer/src/blocs/message-bloc.dart';
 import 'package:startup_namer/src/model/message.dart';
+import 'package:startup_namer/src/screens/components/bubble.dart';
 
 class MessageListScreen extends StatefulWidget {
   @override
@@ -32,17 +33,22 @@ class _MessageListState extends State<MessageListScreen> {
           stream: _bloc.messageStream,
           builder: (context, snapshot) {
             if (!snapshot.hasData) return Container(child: Text('No data'));
-            return ListView.separated(
-              separatorBuilder: (context, index) => Divider(),
+            return ListView.builder(
               reverse: true,
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
-                return Text(snapshot.data[index].content);
-              },
+                return MessageBubble(msg: snapshot.data[index]);
+              }
             );
           },
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bloc.dispose();
   }
 }
