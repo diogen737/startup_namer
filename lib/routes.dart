@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:startup_namer/screens/message-list/message-list.dart';
-import 'package:startup_namer/screens/saved-messages/saved-messages.dart';
+import 'package:startup_namer/src/screens/message-list.dart';
 
 final Map<String, WidgetBuilder> routes = {
-  '/': (context) => MessageList(),
-  '/saved': (context) => SavedMessageList(),
+  '/': (context) => MessageListScreen(),
+  // '/saved': (context) => SavedMessageList(),
 };

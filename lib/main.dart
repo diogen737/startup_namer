@@ -3,19 +3,12 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:startup_namer/models/saved-messages.dart';
 import 'package:startup_namer/routes.dart';
 import 'package:startup_namer/theme/style.dart';
 
-void main() => runApp(
-  ChangeNotifierProvider(
-    create: (context) => SavedMessages(),
-    child: MyApp()
-  )
-);
+void main() => runApp(App());
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
