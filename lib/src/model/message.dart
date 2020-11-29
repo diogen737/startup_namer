@@ -14,15 +14,16 @@ class Message {
     content = pojo.content;
     sender = pojo.sender;
     senderUid = pojo.senderUid;
+    sent = pojo.sent;
     isMine = senderUid == selfUid;
     isDateSeparator = false;
-    // TODO: add error check
-    sent = DateTime.parse(pojo.sent);
     sentFormatted = DateFormat.Hm().format(sent);
   }
 
-  Message.dateSeparator(String date) {
+  Message.dateSeparator(Message msg, String date) {
     content = date;
+    sent = msg.sent;
+    isMine = false;
     isDateSeparator = true;
   }
 }

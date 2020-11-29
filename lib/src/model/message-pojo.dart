@@ -2,7 +2,7 @@ class MessagePojo {
   String content;
   String sender;
   String senderUid;
-  String sent;
+  DateTime sent;
 
   MessagePojo(
     this.content,

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:startup_namer/src/blocs/message-bloc.dart';
 import 'package:startup_namer/src/model/message.dart';
 import 'package:startup_namer/src/screens/components/bubble.dart';
@@ -11,11 +14,19 @@ class MessageListScreen extends StatefulWidget {
 
 class _MessageListState extends State<MessageListScreen> {
   MessageBloc _bloc;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _bloc = MessageBloc();
+    _scrollController = ScrollController(keepScrollOffset: true);
+    _scrollController.addListener(() {
+      log(_scrollController.position.toString());
+      if (_scrollController.position.maxScrollExtent == _scrollController.offset) {
+        _bloc.loadMoreMessages();
+      }
+    });
   }
 
   @override
@@ -29,13 +40,15 @@ class _MessageListState extends State<MessageListScreen> {
         )],
       ),
       body: RefreshIndicator(
-        onRefresh: () => _bloc.getMessages(),
+        onRefresh: () => _bloc.loadInitialMessages(),
         child: StreamBuilder<List<Message>>(
           stream: _bloc.messageStream,
           builder: (context, snapshot) {
             if (!snapshot.hasData) return Loading();
             return ListView.builder(
               reverse: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              controller: _scrollController,
               itemCount: snapshot.data.length,
               itemBuilder: (context, index) {
                 return MessageBubble(msg: snapshot.data[index]);
@@ -51,5 +64,6 @@ class _MessageListState extends State<MessageListScreen> {
   void dispose() {
     super.dispose();
     _bloc.dispose();
+    _scrollController.dispose();
   }
 }
